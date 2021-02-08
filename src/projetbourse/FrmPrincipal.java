@@ -186,18 +186,93 @@ public class FrmPrincipal extends javax.swing.JFrame {
         Action act6 = new Action(6,"VMWare",121.56,123.91,43);
         Action act7 = new Action(7,"IBM",42.61,40.98,126);
         
+        trad1.getSesActions().add(act1);
+        trad1.getSesActions().add(act2);
+        trad1.getSesActions().add(act7);
+        trad2.getSesActions().add(act1);
+        trad2.getSesActions().add(act3);
+        trad2.getSesActions().add(act4);
+        trad2.getSesActions().add(act5);
+        trad3.getSesActions().add(act6);
+        trad3.getSesActions().add(act7);
+        trad4.getSesActions().add(act4);
+        trad4.getSesActions().add(act5);
+        trad4.getSesActions().add(act1);
         
+        mesTraders.add(trad1);
+        mesTraders.add(trad2);
+        mesTraders.add(trad3);
+        mesTraders.add(trad4);
+        
+        //int prixTotal = 0;
+        
+        for(Trader trad : mesTraders)
+        {
+            v = new Vector();
+            v.add(trad.getIdTrader());
+            v.add(trad.getNomTrader());
+            dtmTraders.addRow(v);
+           // for(Action act : trad.getSesActions())
+           // {
+           //     prixTotal = (int) (prixTotal + (act.getCoursReel()*act.getQuantiteAchat())-(act.getCoursAchat()*act.getQuantiteAchat()));
+           // }
+        }
+        //lblPortefeuille.setText(String.valueOf(prixTotal));
     }//GEN-LAST:event_formWindowOpened
 
     private void tblTradersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTradersMouseClicked
+        dtmActions.getDataVector().removeAllElements();
         
-        // A vous de jouer
+        double prixTotal = 0;
+        int numTrader;
+        numTrader = Integer.parseInt(tblTraders.getValueAt(tblTraders.getSelectedRow(), 0).toString());
         
+        for(Trader trad: mesTraders)
+        {
+            if(trad.getIdTrader() == numTrader)
+           {
+               for(Action act : trad.getSesActions())
+               {
+                   v = new Vector();
+                   v.add(act.getIdAction());
+                   v.add(act.getNomAction());
+                   v.add(act.getCoursReel());
+                   v.add(act.getCoursAchat());
+                   v.add(act.getQuantiteAchat());
+                   dtmActions.addRow(v);
+                   prixTotal =  (double)(prixTotal + (act.getCoursReel()*act.getQuantiteAchat())-(act.getCoursAchat()*act.getQuantiteAchat()));
+               }
+           }
+        }
+        lblPortefeuille.setText(String.valueOf(prixTotal));        
     }//GEN-LAST:event_tblTradersMouseClicked
 
     private void tblActionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblActionsMouseClicked
+    int action;
+    double argent;
+    
+    action = Integer.parseInt(tblTraders.getValueAt(tblTraders.getSelectedRow(), 0).toString());   
         
-        // A vous de jouer
+        for(Trader trad : mesTraders)
+        {
+            for(Action act : trad.getSesActions())
+            {
+                if(act.getCoursReel()<act.getCoursAchat())
+                {
+                    argent = (act.getCoursReel()*act.getQuantiteAchat())-(act.getCoursAchat()*act.getQuantiteAchat());
+                    lblMessage.setText("Vous perdez de l'argent sur cette action :"+argent);
+                }
+                else if(act.getCoursReel()>act.getCoursAchat())
+                {
+                    argent = (act.getCoursReel()*act.getQuantiteAchat())-(act.getCoursAchat()*act.getQuantiteAchat());
+                    lblMessage.setText("Vous gagnez de l'argent sur cette action :"+argent);
+                }
+            }
+        }
+        
+        
+        
+        
         
     }//GEN-LAST:event_tblActionsMouseClicked
 
