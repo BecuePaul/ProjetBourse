@@ -269,16 +269,36 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 }
             }
         }
-        
-        
-        
-        
-        
+
     }//GEN-LAST:event_tblActionsMouseClicked
 
     private void btnVendreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendreMouseClicked
+        if(txtQuantiteVendue.getText().compareTo("")==0)
+        {
+            JOptionPane.showMessageDialog(this, "Veuillez saisir un nombre");
+        }
         
-        // A vous de jouer
+        double vente;
+        
+        for(Trader trad : mesTraders)
+        {
+            for(Action act : trad.getSesActions())
+            {
+                
+                if()
+                    {
+                        JOptionPane.showMessageDialog(this, "Vous ne pouvez pas vendre plus que ce que vous possédez");
+                    }
+                if(act.getQuantiteAchat()==0)
+                {
+                    
+                }
+                else
+                {
+                    
+                }
+            }
+        }
         
     }//GEN-LAST:event_btnVendreMouseClicked
 
