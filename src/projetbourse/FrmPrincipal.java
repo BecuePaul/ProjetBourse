@@ -248,50 +248,57 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tblTradersMouseClicked
 
     private void tblActionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblActionsMouseClicked
-    int action;
-    double argent;
-    
-    action = Integer.parseInt(tblTraders.getValueAt(tblTraders.getSelectedRow(), 0).toString());   
-        
+        double reel = 0;
+        double achat = 0;
+        double gain = 0;
+        lblMessage.setText("");      
         for(Trader trad : mesTraders)
         {
             for(Action act : trad.getSesActions())
             {
-                if(act.getCoursReel()<act.getCoursAchat())
+                if(act.getIdAction() == Integer.parseInt(tblActions.getValueAt(tblActions.getSelectedRow(),0).toString()))
                 {
-                    argent = (act.getCoursReel()*act.getQuantiteAchat())-(act.getCoursAchat()*act.getQuantiteAchat());
-                    lblMessage.setText("Vous perdez de l'argent sur cette action :"+argent);
-                }
-                else if(act.getCoursReel()>act.getCoursAchat())
-                {
-                    argent = (act.getCoursReel()*act.getQuantiteAchat())-(act.getCoursAchat()*act.getQuantiteAchat());
-                    lblMessage.setText("Vous gagnez de l'argent sur cette action :"+argent);
+                    reel = ((act.getCoursReel())*(act.getQuantiteAchat()));
+                    achat = ((act.getCoursAchat())*(act.getQuantiteAchat()));
+                    gain = reel - achat;
                 }
             }
+        }       
+        if(gain > reel)
+        {
+            lblMessage.setText("Vous gagnez de l'argent sur cette action : " + gain);
         }
-
+        else if(gain < reel)
+        {          
+            lblMessage.setText("Vous perdez de l'argent sur cette action : " + gain);
+        }
     }//GEN-LAST:event_tblActionsMouseClicked
 
     private void btnVendreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendreMouseClicked
+        
+        int quantiteVendue=Integer.parseInt(txtQuantiteVendue.getText());
+        
+        
         if(txtQuantiteVendue.getText().compareTo("")==0)
         {
             JOptionPane.showMessageDialog(this, "Veuillez saisir un nombre");
         }
-        
-        double vente;
-        
+        double vente;        
         for(Trader trad : mesTraders)
         {
             for(Action act : trad.getSesActions())
             {
-                
-                if()
-                    {
-                        JOptionPane.showMessageDialog(this, "Vous ne pouvez pas vendre plus que ce que vous possédez");
-                    }
+              //if(act.getQuantiteAchat()-quantiteVendue=0)
+              {
+                  
+              }
+                //if()
+                   // {
+                   //     JOptionPane.showMessageDialog(this, "Vous ne pouvez pas vendre plus que ce que vous possédez");
+                   // }
                 if(act.getQuantiteAchat()==0)
                 {
-                    
+                    //dtmActions.removeRow(0);
                 }
                 else
                 {
